@@ -18,7 +18,7 @@ Camera3D createCamera(void)
 
 void drawBody(Body *body)
 {
-    DrawCube(body->position, BODY_HEIGHT, BODY_HEIGHT, BODY_HEIGHT, RED);
+    DrawCube(body->position, BODY_HEIGHT, BODY_HEIGHT, BODY_HEIGHT, body->color);
     DrawCubeWires(body->position, 1.0f, 1.0f, 1.0f, BLACK);
 }
 
@@ -27,24 +27,15 @@ void drawScene(void)
     DrawPlane((Vector3){0.0f, 0.0f, 0.0f}, (Vector2){32.0f, 32.0f}, LIGHTGRAY);
 }
 
-void checkKeyPress(Body *body)
+void checkKeyPress(Body *body1, Body *body2)
 {
     if (IsKeyDown(KEY_F))
     {
-        applyForce(body, (Vector3){0.0f, 0.0f, 0.01f});
+        applyForce(body1, (Vector3){0.01f, 0.0f, 0.0f});
     }
-}
 
-#define COLLISION_HEIGHT 0.5f * BODY_HEIGHT
-
-void handleGroundCollision(Body *body)
-{
-    if (body->position.y <= COLLISION_HEIGHT || body->position.y - body->velocity.y <= COLLISION_HEIGHT)
+    if (IsKeyDown(KEY_G))
     {
-        // We need to apply a force of equal magnitude to the bodies velocity, in the direction normal to the ground plane.
-        // This will stop the body from falling through the ground.
-        // We know the normal of the ground plane is (0, 1, 0), so we can just apply a force of (0, -velocity.y, 0)
-        Vector3 normalForce = (Vector3){0, GRAVITY - body->velocity.y, 0};
-        applyForce(body, normalForce);
+        applyForce(body2, (Vector3){-0.01f, 0.0f, 0.0f});
     }
 }
