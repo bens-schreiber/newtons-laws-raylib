@@ -101,7 +101,4 @@ void handleBodyCollision(Body *body1, Body *body2) {
 
     // Body1 applies this force
     applyForce(body2, Vector3Scale(body2Force, -1));
-
-
-
 }
